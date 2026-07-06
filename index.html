@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - Manage Books</title>
+    <style>
+        :root { --primary: #34495e; --secondary: #2ecc71; --danger: #e74c3c; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; padding: 30px; }
+        .container { max-width: 900px; margin: auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        
+        /* Form Styling */
+        .form-group { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+        input { flex: 1; padding: 12px; border: 1px solid #ddd; border-radius: 6px; min-width: 150px; }
+        .btn-add { background: var(--secondary); color: white; border: none; padding: 12px 25px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        
+        /* Table Styling */
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th { background: var(--primary); color: white; padding: 15px; text-align: left; }
+        td { padding: 15px; border-bottom: 1px solid #eee; }
+        .btn-delete { background: var(--danger); color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; }
+        
+        .empty-msg { text-align: center; color: #888; padding: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>📚 Manage Books (Admin Inventory)</h2>
+    
+    <div class="form-group">
+        <input type="text" id="bookID" placeholder="Book ID (e.g. B001)">
+        <input type="text" id="bookTitle" placeholder="Book Title">
+        <input type="text" id="author" placeholder="Author">
+        <button class="btn-add" onclick="addBook()">+ Add Book</button>
+    </div>
+
+    <hr>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="bookList">
+            </tbody>
+    </table>
+    <div id="noData" class="empty-msg">No books in inventory.</div>
+</div>
+
+<script>
+    // စာအုပ်စာရင်းကို သိမ်းမယ့် Array
+    let books = [
+        { id: 'B001', title: 'HTML for Beginners', author: 'John Doe' },
+        { id: 'B002', title: 'Modern CSS Guide', author: 'Jane Smith' }
+    ];
+
+    function displayBooks() {
+        const list = document.getElementById('bookList');
+        const noData = document.getElementById('noData');
+        list.innerHTML = '';
+
+        if (books.length === 0) {
+            noData.style.display = 'block';
+        } else {
+            noData.style.display = 'none';
+            books.forEach((book, index) => {
+                list.innerHTML += 
+                    <tr>
+                        <td><b>${book.id}</b></td>
+                        <td>${book.title}</td>
+                        <td>${book.author}</td>
+                        <td><button class="btn-delete" onclick="deleteBook(${index})">Delete</button></td>
+                    </tr>
+                ;
+            });
+        }
+    }
+
+    // စာအုပ်အသစ်ထည့်ခြင်း
+    function addBook() {
+        const id = document.getElementById('bookID').value;
+        const title = document.getElementById('bookTitle').value;
+        const author = document.getElementById('author').value;
+
+        if (id && title && author) {
+            books.push({ id, title, author });
+            displayBooks();
+            // Input တွေကို ပြန်ရှင်းထုတ်ခြင်း
+            document.getElementById('bookID').value = '';
+            document.getElementById('bookTitle').value = '';
+            document.getElementById('author').value = '';
+        } else {
+            alert("ကျေးဇူးပြု၍ အချက်အလက်စုံလင်စွာ ဖြည့်ပါ။");
+        }
+    }
+
+    // စာအုပ်ဖျက်ခြင်း
+    function deleteBook(index) {
+        if(confirm('Are you sure you want to delete this book?')) {
+            books.splice(index, 1);
+            displayBooks();
+        }
+    }
+
+    // စစချင်း စာရင်းကို ပြပေးရန်
+    displayBooks();
+</script>
+
+</body>
+</html>

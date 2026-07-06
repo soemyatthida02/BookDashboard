@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Library Home | စာကြည့်တိုက် လက်ထောက်</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        .hero-section {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            color: white;
+            padding: 100px 0;
+            border-radius: 0 0 50px 50px;
+        }
+        .stat-card {
+            border: none;
+            transition: transform 0.3s;
+        }
+        .stat-card:hover { transform: translateY(-10px); }
+    </style>
+</head>
+<body class="bg-light">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#"><i class="bi bi-book-half"></i> Smart Library</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="/">ပင်မစာမျက်နှာ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/books">စာအုပ်များ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/members">အသင်းဝင်များ</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero-section text-center">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Library Management System</h1>
+            <p class="lead">စာအုပ်များကို စနစ်တကျ ရှာဖွေ၊ ငှားရမ်း၊ ထိန်းသိမ်းပါ။</p>
+            <div class="row justify-content-center mt-4">
+                <div class="col-md-6">
+                    <form action="/search" method="GET" class="input-group mb-3">
+                        <input type="text" class="form-control form-control-lg" placeholder="စာအုပ်အမည် သို့မဟုတ် စာရေးဆရာ..." name="query">
+                        <button class="btn btn-primary btn-lg" type="submit">ရှာဖွေပါ</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container my-5">
+        <div class="row text-center g-4">
+            <div class="col-md-4">
+                <div class="card stat-card shadow-sm p-4 bg-white">
+                    <i class="bi bi-journal-text fs-1 text-primary"></i>
+                    <h2 class="mt-2 fw-bold" th:text="${totalBooks}">1,250</h2>
+                    <p class="text-muted">စုစုပေါင်း စာအုပ်အရေအတွက်</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card stat-card shadow-sm p-4 bg-white">
+                    <i class="bi bi-person-check fs-1 text-success"></i>
+                    <h2 class="mt-2 fw-bold" th:text="${activeMembers}">450</h2>
+                    <p class="text-muted">တက်ကြွသော အသင်းဝင်များ</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card stat-card shadow-sm p-4 bg-white">
+                    <i class="bi bi-arrow-left-right fs-1 text-warning"></i>
+                    <h2 class="mt-2 fw-bold" th:text="${borrowedBooks}">85</h2>
+                    <p class="text-muted">လက်ရှိ ငှားရမ်းထားသော စာအုပ်များ</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-5 text-center">
+            <h3 class="mb-4">အမြန်လုပ်ဆောင်ချက်များ</h3>
+            <div class="d-flex justify-content-center gap-3">
+                <a href="/add-book" class="btn btn-outline-dark px-4"><i class="bi bi-plus-circle"></i> စာအုပ်အသစ်ထည့်ရန်</a>
+
+
